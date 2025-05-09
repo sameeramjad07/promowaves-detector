@@ -1,0 +1,30 @@
+{
+  "manifest_version": 3,
+  "name": "Promowaves Detector",
+  "version": "1.1",
+  "description": "Detects Promowaves-affiliated stores in Google search results and redirects users through Promowaves.",
+  "permissions": ["activeTab", "tabs", "storage", "scripting", "webNavigation"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "/assets/faviconTest.ico",
+      "48": "/assets/faviconTest.ico",
+      "128": "/assets/faviconTest.ico"
+    }
+  },
+  "icons": {
+    "16": "/assets/faviconTest.ico",
+    "48": "/assets/faviconTest.ico",
+    "128": "/assets/faviconTest.ico"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.google.com/search*"],
+      "js": ["content.js"],
+      "css": ["styles.css"]
+    }
+  ]
+}
