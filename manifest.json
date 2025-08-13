@@ -1,30 +1,46 @@
 {
   "manifest_version": 3,
   "name": "Promowaves Detector",
-  "version": "1.1",
-  "description": "Detects Promowaves-affiliated stores in Google search results and redirects users through Promowaves.",
+  "version": "1.2.0",
+  "description": "Detects Promowaves-affiliated stores in Google search results and redirects users through Promowaves for exclusive discounts and cashback.",
+  "author": "CodeNext Solutions",
+  "homepage_url": "https://promowaves.net",
   "permissions": ["activeTab", "tabs", "storage", "scripting", "webNavigation"],
+  "host_permissions": ["https://promowaves.net/*", "http://localhost:3000/*"],
   "background": {
     "service_worker": "background.js"
   },
   "action": {
     "default_popup": "popup.html",
+    "default_title": "Promowaves Detector - Check for affiliate stores",
     "default_icon": {
       "16": "/assets/faviconTest.ico",
+      "32": "/assets/faviconTest.ico",
       "48": "/assets/faviconTest.ico",
       "128": "/assets/faviconTest.ico"
     }
   },
   "icons": {
     "16": "/assets/faviconTest.ico",
+    "32": "/assets/faviconTest.ico",
     "48": "/assets/faviconTest.ico",
     "128": "/assets/faviconTest.ico"
   },
   "content_scripts": [
     {
-      "matches": ["https://www.google.com/search*"],
+      "matches": [
+        "https://www.google.com/search*",
+        "https://google.com/search*"
+      ],
       "js": ["content.js"],
-      "css": ["styles.css"]
+      "css": ["styles.css"],
+      "run_at": "document_end"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["assets/*"],
+      "matches": ["<all_urls>"]
     }
   ]
 }

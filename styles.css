@@ -20,7 +20,7 @@ body {
 
 /* Header styles */
 .header {
-  background-color: #f8f8f8;
+  background: linear-gradient(135deg, #e41e26 0%, #c41920 100%);
   padding: 15px;
   border-bottom: 1px solid #f0f0f0;
   display: flex;
@@ -37,23 +37,28 @@ body {
 .logo h1 {
   font-size: 18px;
   font-weight: 600;
-  color: #e41e26;
+  color: white;
   margin: 0;
+}
+
+.logo-image {
+  border-radius: 4px;
 }
 
 .wave-icon {
   width: 24px;
   height: 24px;
-  color: #e41e26;
+  color: white;
 }
 
 .badge {
-  background-color: #e41e26;
+  background-color: rgba(255, 255, 255, 0.2);
   color: white;
   font-size: 12px;
   font-weight: 500;
   padding: 4px 8px;
   border-radius: 12px;
+  backdrop-filter: blur(10px);
 }
 
 /* Content styles */
@@ -82,11 +87,12 @@ body {
   line-height: 1.5;
   text-align: center;
   color: #555555;
+  white-space: pre-line;
 }
 
 /* Button styles */
 .redirect-button {
-  background-color: #e41e26;
+  background: linear-gradient(135deg, #e41e26 0%, #c41920 100%);
   color: white;
   border: none;
   border-radius: 6px;
@@ -103,7 +109,7 @@ body {
 }
 
 .redirect-button:hover {
-  background-color: #c41920;
+  background: linear-gradient(135deg, #c41920 0%, #a01218 100%);
   transform: translateY(-1px);
   box-shadow: 0 4px 8px rgba(228, 30, 38, 0.3);
 }
@@ -165,8 +171,8 @@ body {
 }
 
 .status-card.affiliated {
-  background-color: #ffeeee;
-  border: 1px solid #ffdddd;
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+  border: 1px solid #bae6fd;
 }
 
 .status-card.not-affiliated {
@@ -174,20 +180,77 @@ body {
   border: 1px solid #eeeeee;
 }
 
-/* Promowaves badge for search results */
+/* Enhanced Promowaves badge for search results */
 .promowaves-badge {
-  display: inline-block;
-  background-color: #e41e26;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #e41e26 0%, #c41920 100%);
   color: white;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 6px 12px;
+  border-radius: 20px;
+  margin: 8px 0;
+  box-shadow: 0 2px 8px rgba(228, 30, 38, 0.3);
+  transition: all 0.2s ease;
+  position: relative;
+  z-index: 1000;
+}
+
+.promowaves-badge:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(228, 30, 38, 0.4);
+}
+
+.promowaves-logo {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.promowaves-badge span {
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.promowaves-button {
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 12px;
   font-size: 11px;
   font-weight: 500;
-  padding: 3px 6px;
-  border-radius: 10px;
-  margin-left: 6px;
-  vertical-align: middle;
-  cursor: default;
-  position: absolute;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(10px);
+}
+
+.promowaves-button:hover {
+  background: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-1px);
+}
+
+.promowaves-button:active {
+  transform: translateY(0);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+  .promowaves-badge {
+    font-size: 11px;
+    padding: 5px 10px;
+    gap: 6px;
+  }
+
+  .promowaves-button {
+    padding: 3px 6px;
+    font-size: 10px;
+  }
 }
