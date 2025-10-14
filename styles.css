@@ -182,18 +182,18 @@ body {
 
 /* Promowaves inline indicator in search result title */
 .promowaves-inline-indicator {
+  font-size: 12px;
+  font-weight: 500;
+  color: #e41e26;
+  margin-left: 6px;
   display: inline-flex;
   align-items: center;
-  gap: 4px;
-  margin-left: 6px;
-  vertical-align: middle;
-  white-space: nowrap;
 }
 
 .promowaves-inline-separator {
-  color: #70757a;
+  color: #aaa;
   font-size: 14px;
-  margin: 0 2px;
+  margin: 0 4px;
 }
 
 .promowaves-inline-logo {
@@ -284,4 +284,9 @@ body {
     padding: 3px 6px;
     font-size: 10px;
   }
+}
+
+.promowaves-inline-icon {
+  width: 14px;
+  height: 14px;
 }

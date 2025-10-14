@@ -1,8 +1,18 @@
 // Function to check if a URL is affiliated
 function checkAffiliation(url, callback) {
+  let responded = false;
+  const timeout = setTimeout(() => {
+    if (!responded) {
+      console.warn("checkAffiliation timeout for", url);
+      callback({ isAffiliated: false });
+    }
+  }, 2000);
+
   chrome.runtime.sendMessage(
-    { action: "checkAffiliation", url: url },
+    { action: "checkAffiliation", url },
     (response) => {
+      responded = true;
+      clearTimeout(timeout);
       if (chrome.runtime.lastError) {
         console.error("Error checking affiliation:", chrome.runtime.lastError);
         callback({ isAffiliated: false });
@@ -14,29 +24,25 @@ function checkAffiliation(url, callback) {
 }
 
 // Function to add Promowaves indicator to the title link
+// Function to add Promowaves indicator to the title link
 function addPromowavesToTitle(h3Element, storeId, storeDomain) {
-  // Check if already added
-  if (h3Element.querySelector(".promowaves-inline-indicator")) {
-    return;
-  }
+  if (h3Element.querySelector(".promowaves-inline-indicator")) return;
 
-  // Create the Promowaves indicator
   const indicator = document.createElement("span");
   indicator.className = "promowaves-inline-indicator";
 
   indicator.innerHTML = `
-      <span class="promowaves-inline-separator">·</span>
-      <svg class="promowaves-inline-logo" width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1" stroke="#e41e26" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1" stroke="#e41e26" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1" stroke="#e41e26" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-      <span class="promowaves-inline-text">Promowaves</span>
-    `;
+    <span class="promowaves-inline-separator">·</span>
+    <img src="${chrome.runtime.getURL("assets/faviconTest.ico")}" 
+         alt="Promowaves" 
+         class="promowaves-inline-icon"
+         width="14" height="14"
+         style="vertical-align: text-bottom; margin-right: 4px;" />
+    <span class="promowaves-inline-text">Promowaves</span>
+  `;
 
-  indicator.title = "Available on Promowaves - Shop for exclusive discounts!";
+  indicator.title = "Listed on Promowaves";
 
-  // Append to the h3 title
   h3Element.appendChild(indicator);
 }
 
@@ -45,45 +51,20 @@ function createPromowavesBadge(storeId, storeDomain) {
   const badge = document.createElement("div");
   badge.className = "promowaves-badge";
 
-  // Create logo element
-  const logo = document.createElement("div");
-  logo.className = "promowaves-logo";
-  logo.innerHTML = `
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    `;
+  const logo = document.createElement("img");
+  logo.src = chrome.runtime.getURL("assets/faviconTest.ico");
+  logo.alt = "Promowaves";
+  logo.width = 16;
+  logo.height = 16;
+  logo.style.marginRight = "6px";
 
-  // Create text element
   const text = document.createElement("span");
-  text.textContent = "Available on Promowaves";
-
-  // Create button
-  const button = document.createElement("button");
-  button.className = "promowaves-button";
-  button.innerHTML = `
-      <span>Shop via Promowaves</span>
-      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <line x1="5" y1="12" x2="19" y2="12"></line>
-        <polyline points="12 5 19 12 12 19"></polyline>
-      </svg>
-    `;
-
-  // Add click handler for the button
-  button.addEventListener("click", (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    const promowavesUrl = `https://promowaves.net/shop/${storeId}`;
-    window.open(promowavesUrl, "_blank");
-  });
+  text.textContent = "Promowaves";
 
   badge.appendChild(logo);
   badge.appendChild(text);
-  badge.appendChild(button);
 
-  badge.title = `Shop via Promowaves for discounts! (${storeDomain})`;
+  badge.title = `This store is listed on Promowaves (${storeDomain})`;
 
   return badge;
 }
@@ -94,19 +75,24 @@ function processSearchResults() {
 
   // Select all search result containers
   const resultContainers = document.querySelectorAll(
-    "div.g, div[data-text-ad], div.uEierd, div[data-sokoban-container]"
+    "div.MjjYud, div.g, div[data-text-ad], div.uEierd, div[data-sokoban-container]"
   );
+  console.log("Found", resultContainers.length, "result containers");
 
   const processedUrls = new Set();
 
   resultContainers.forEach((container) => {
     // Find the main clickable link and h3 title
-    const mainLink = container.querySelector('a[href*="://"]');
+    const mainLink =
+      container.querySelector('a[data-ved][href^="http"]') ||
+      container.querySelector('a[href*="://"]');
+
     const h3Title = container.querySelector("h3");
 
     if (!mainLink || !h3Title) return;
 
     const url = mainLink.href;
+    console.log("Checking result:", url);
 
     // Skip if already processed
     if (processedUrls.has(url)) return;

@@ -9,6 +9,11 @@
   "host_permissions": [
     "https://promowaves.net/*",
     "http://localhost:3000/*",
+    "https://*.google.com/*",
+    "https://*.google.co.uk/*",
+    "https://*.google.ca/*",
+    "https://*.google.com.pk/*",
+    "https://*.google.in/*",
     "<all_urls>"
   ],
   "background": {
@@ -34,11 +39,16 @@
     {
       "matches": [
         "https://www.google.com/search*",
-        "https://google.com/search*"
+        "https://google.com/search*",
+        "https://www.google.co.uk/search*",
+        "https://www.google.ca/search*",
+        "https://www.google.com.pk/search*",
+        "https://www.google.in/search*"
       ],
+
       "js": ["content-google.js"],
       "css": ["styles.css"],
-      "run_at": "document_end"
+      "run_at": "document_idle"
     },
     {
       "matches": ["<all_urls>"],
@@ -57,5 +67,14 @@
       "resources": ["assets/*"],
       "matches": ["<all_urls>"]
     }
-  ]
+  ],
+  "externally_connectable": {
+    "matches": [
+      "https://*.google.com/*",
+      "https://*.google.co.uk/*",
+      "https://*.google.ca/*",
+      "https://*.google.com.pk/*",
+      "https://*.google.in/*"
+    ]
+  }
 }

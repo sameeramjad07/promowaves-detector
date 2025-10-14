@@ -25,78 +25,78 @@
 
   // Function to create the floating banner
   function createPromowavesBanner(storeId, storeDomain) {
-    // Check if banner already exists
+    // Prevent duplicate banners
     if (document.getElementById("promowaves-floating-banner")) {
       return;
     }
+
+    // Resolve favicon path correctly within the extension
+    const logoPath = chrome.runtime.getURL("/assets/faviconTest.ico");
 
     const banner = document.createElement("div");
     banner.id = "promowaves-floating-banner";
     banner.className = "promowaves-banner";
 
     banner.innerHTML = `
-        <div class="promowaves-banner-content">
-          <div class="promowaves-banner-left">
-            <div class="promowaves-banner-logo">
+      <div class="promowaves-banner-content">
+        <div class="promowaves-banner-left">
+          <div class="promowaves-banner-logo">
             <img
-            src="/assets/faviconTest.ico"
-            alt="Promowaves Logo"
-            class="logo-image"
-            width="48"
-          />
-            </div>
-            <div class="promowaves-banner-text">
-              <div class="promowaves-banner-title">
-                <strong>This store is on Promowaves!</strong>
-              </div>
-              <div class="promowaves-banner-subtitle">
-                Shop through Promowaves for exclusive discounts & cashback
-              </div>
-            </div>
+              src="${logoPath}"
+              alt="Promowaves Logo"
+              class="logo-image"
+              width="48"
+              height="38"
+            />
           </div>
-          <div class="promowaves-banner-right">
-            <a href="https://promowaves.net/shop/${storeId}" target="_blank" class="promowaves-banner-button">
-              <span>Go to Promowaves</span>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="5" y1="12" x2="19" y2="12"></line>
-                <polyline points="12 5 19 12 12 19"></polyline>
-              </svg>
-            </a>
-            <button class="promowaves-banner-close" title="Close">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="18" y1="6" x2="6" y2="18"></line>
-                <line x1="6" y1="6" x2="18" y2="18"></line>
-              </svg>
-            </button>
+          <div class="promowaves-banner-text">
+            <div class="promowaves-banner-title">
+              <strong>This store is on Promowaves!</strong>
+            </div>
+            <div class="promowaves-banner-subtitle">
+              Shop through Promowaves for exclusive discounts & cashback
+            </div>
           </div>
         </div>
-      `;
+        <div class="promowaves-banner-right">
+          <a href="https://promowaves.net/shop/${storeId}" target="_blank" class="promowaves-banner-button">
+            <span>Go to Promowaves</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </a>
+          <button class="promowaves-banner-close" title="Close">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+      </div>
+    `;
 
-    // Add close functionality
+    // Add close button functionality
     const closeBtn = banner.querySelector(".promowaves-banner-close");
     closeBtn.addEventListener("click", () => {
       banner.classList.add("promowaves-banner-hidden");
-      setTimeout(() => {
-        banner.remove();
-      }, 300);
-
-      // Store dismissal in sessionStorage so it doesn't show again this session
+      setTimeout(() => banner.remove(), 300);
       sessionStorage.setItem(
         `promowaves-banner-dismissed-${storeDomain}`,
         "true"
       );
     });
 
-    // Insert banner at the top of the page
+    // Insert banner at top of page
     document.body.insertBefore(banner, document.body.firstChild);
-
-    // Add body padding to prevent content from being hidden
     document.body.style.paddingTop = "60px";
 
-    // Animate banner in
-    setTimeout(() => {
-      banner.classList.add("promowaves-banner-visible");
-    }, 100);
+    // Animate banner
+    setTimeout(() => banner.classList.add("promowaves-banner-visible"), 100);
 
     bannerShown = true;
   }

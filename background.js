@@ -55,26 +55,41 @@ async function loadFromCache() {
 
 // Initialize store list
 async function initializeStores() {
-  console.log("Starting initializeStores");
+  console.log("Starting initializeStores...");
   await loadFromCache();
-  console.log(
-    "Cache loaded, checking fetch condition:",
-    Date.now() - lastFetched,
-    CACHE_DURATION
-  );
-  if (Date.now() - lastFetched > CACHE_DURATION) {
-    console.log("Triggering fetchStoreList");
+  console.log(`Loaded ${affiliatedStores.size} stores from cache`);
+
+  if (
+    Date.now() - lastFetched > CACHE_DURATION ||
+    affiliatedStores.size === 0
+  ) {
+    console.log("Cache stale or empty, fetching from API...");
     await fetchStoreList();
   } else {
-    console.log("Skipping fetch, cache is fresh");
+    console.log("Using cached stores");
   }
+
+  console.log(
+    `Initialization complete: ${affiliatedStores.size} stores loaded`
+  );
 }
 
 // Function to check if a URL is affiliated
-function checkAffiliation(url) {
+async function checkAffiliation(url) {
   try {
     const parsedUrl = new URL(url);
     let domain = parsedUrl.hostname.replace(/^www\./, "").toLowerCase();
+
+    // Reload from cache if Map is empty (handles service worker sleep)
+    if (affiliatedStores.size === 0) {
+      const result = await chrome.storage.local.get("affiliatedStores");
+      if (result.affiliatedStores) {
+        affiliatedStores = new Map(result.affiliatedStores);
+        console.log(
+          `Reloaded ${affiliatedStores.size} stores from cache for check`
+        );
+      }
+    }
 
     // Check exact match first
     if (affiliatedStores.has(domain)) {
@@ -106,17 +121,34 @@ function checkAffiliation(url) {
 // Listen for messages from popup.js or content.js
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === "checkAffiliation") {
+    const handleCheck = async (url) => {
+      try {
+        // Wait for stores to be ready
+        if (affiliatedStores.size === 0) {
+          console.log("Store list empty, initializing before check...");
+          await initializeStores();
+        }
+
+        const result = await checkAffiliation(url);
+        console.log("Affiliation check result for", url, "→", result);
+        sendResponse(result);
+      } catch (err) {
+        console.error("Error during affiliation check:", err);
+        sendResponse({
+          isAffiliated: false,
+          storeDomain: "unknown",
+          storeId: null,
+        });
+      }
+    };
+
     if (request.url) {
-      // For content script
-      const result = checkAffiliation(request.url);
-      sendResponse(result);
+      handleCheck(request.url);
     } else {
-      // For popup, query active tab
       chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
         const tab = tabs[0];
         if (tab && tab.url) {
-          const result = checkAffiliation(tab.url);
-          sendResponse(result);
+          handleCheck(tab.url);
         } else {
           sendResponse({
             isAffiliated: false,
@@ -126,17 +158,14 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         }
       });
     }
-    return true; // Asynchronous response
+
+    return true; // Keep channel open for async sendResponse
   }
 
   if (request.action === "refreshStores") {
     fetchStoreList()
-      .then(() => {
-        sendResponse({ success: true });
-      })
-      .catch(() => {
-        sendResponse({ success: false });
-      });
+      .then(() => sendResponse({ success: true }))
+      .catch(() => sendResponse({ success: false }));
     return true;
   }
 });
