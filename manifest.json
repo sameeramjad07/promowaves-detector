@@ -1,12 +1,16 @@
 {
   "manifest_version": 3,
   "name": "Promowaves Detector",
-  "version": "1.2.0",
-  "description": "Detects Promowaves-affiliated stores in Google search results and redirects users through Promowaves for exclusive discounts and cashback.",
+  "version": "2.0.0",
+  "description": "Detects Promowaves-affiliated stores in Google search results and on store websites with a floating banner.",
   "author": "CodeNext Solutions",
   "homepage_url": "https://promowaves.net",
   "permissions": ["activeTab", "tabs", "storage", "scripting", "webNavigation"],
-  "host_permissions": ["https://promowaves.net/*", "http://localhost:3000/*"],
+  "host_permissions": [
+    "https://promowaves.net/*",
+    "http://localhost:3000/*",
+    "<all_urls>"
+  ],
   "background": {
     "service_worker": "background.js"
   },
@@ -32,9 +36,20 @@
         "https://www.google.com/search*",
         "https://google.com/search*"
       ],
-      "js": ["content.js"],
+      "js": ["content-google.js"],
       "css": ["styles.css"],
       "run_at": "document_end"
+    },
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content-banner.js"],
+      "css": ["banner-styles.css"],
+      "run_at": "document_end",
+      "exclude_matches": [
+        "https://www.google.com/*",
+        "https://google.com/*",
+        "https://promowaves.net/*"
+      ]
     }
   ],
   "web_accessible_resources": [

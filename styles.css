@@ -180,6 +180,37 @@ body {
   border: 1px solid #eeeeee;
 }
 
+/* Promowaves inline indicator in search result title */
+.promowaves-inline-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: 6px;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.promowaves-inline-separator {
+  color: #70757a;
+  font-size: 14px;
+  margin: 0 2px;
+}
+
+.promowaves-inline-logo {
+  display: inline-block;
+  vertical-align: middle;
+  flex-shrink: 0;
+  margin-top: -1px;
+}
+
+.promowaves-inline-text {
+  color: #e41e26;
+  font-size: 13px;
+  font-weight: 500;
+  display: inline-block;
+  vertical-align: middle;
+}
+
 /* Enhanced Promowaves badge for search results */
 .promowaves-badge {
   display: flex;
