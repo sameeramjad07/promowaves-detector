@@ -47,27 +47,27 @@ function addPromowavesToTitle(h3Element, storeId, storeDomain) {
 }
 
 // Function to create Promowaves badge with button
-function createPromowavesBadge(storeId, storeDomain) {
-  const badge = document.createElement("div");
-  badge.className = "promowaves-badge";
+// function createPromowavesBadge(storeId, storeDomain) {
+//   const badge = document.createElement("div");
+//   badge.className = "promowaves-badge";
 
-  const logo = document.createElement("img");
-  logo.src = chrome.runtime.getURL("assets/faviconTest.ico");
-  logo.alt = "Promowaves";
-  logo.width = 16;
-  logo.height = 16;
-  logo.style.marginRight = "6px";
+//   const logo = document.createElement("img");
+//   logo.src = chrome.runtime.getURL("assets/faviconTest.ico");
+//   logo.alt = "Promowaves";
+//   logo.width = 16;
+//   logo.height = 16;
+//   logo.style.marginRight = "6px";
 
-  const text = document.createElement("span");
-  text.textContent = "Promowaves";
+//   const text = document.createElement("span");
+//   text.textContent = "Promowaves";
 
-  badge.appendChild(logo);
-  badge.appendChild(text);
+//   badge.appendChild(logo);
+//   badge.appendChild(text);
 
-  badge.title = `This store is listed on Promowaves (${storeDomain})`;
+//   badge.title = `This store is listed on Promowaves (${storeDomain})`;
 
-  return badge;
-}
+//   return badge;
+// }
 
 // Function to process search results
 function processSearchResults() {

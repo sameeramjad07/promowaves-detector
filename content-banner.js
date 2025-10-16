@@ -93,7 +93,7 @@
 
     // Insert banner at top of page
     document.body.insertBefore(banner, document.body.firstChild);
-    document.body.style.paddingTop = "60px";
+    document.body.style.paddingTop = "48px";
 
     // Animate banner
     setTimeout(() => banner.classList.add("promowaves-banner-visible"), 100);

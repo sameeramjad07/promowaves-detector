@@ -6,8 +6,8 @@
   right: 0;
   background: linear-gradient(135deg, #e41e26 0%, #c41920 100%);
   color: white;
-  z-index: 2147483647; /* Maximum z-index to ensure it's always on top */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 2147483647;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
   transform: translateY(-100%);
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
@@ -25,17 +25,17 @@
 .promowaves-banner-content {
   max-width: 1400px;
   margin: 0 auto;
-  padding: 12px 20px;
+  padding: 8px 18px; /* reduced from 12px 20px */
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 20px;
+  gap: 16px;
 }
 
 .promowaves-banner-left {
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 12px;
   flex: 1;
 }
 
@@ -44,71 +44,72 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  width: 34px; /* was 40px */
+  height: 34px; /* was 40px */
   background: rgba(255, 255, 255, 0.15);
-  border-radius: 8px;
+  border-radius: 6px;
   backdrop-filter: blur(10px);
+}
+
+.promowaves-banner-logo img {
+  width: 30px; /* make logo slightly smaller */
+  height: auto;
 }
 
 .promowaves-banner-text {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 1px;
 }
 
 .promowaves-banner-title {
-  font-size: 15px;
+  font-size: 14px; /* was 15px */
   font-weight: 600;
-  line-height: 1.3;
+  line-height: 1.25;
 }
 
 .promowaves-banner-subtitle {
-  font-size: 13px;
-  opacity: 0.95;
-  line-height: 1.3;
+  font-size: 12px; /* was 13px */
+  opacity: 0.9;
+  line-height: 1.25;
 }
 
 .promowaves-banner-right {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   flex-shrink: 0;
 }
 
 .promowaves-banner-button {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   background: white;
   color: #e41e26;
-  padding: 10px 20px;
-  border-radius: 6px;
-  font-size: 14px;
+  padding: 8px 16px; /* was 10px 20px */
+  border-radius: 5px;
+  font-size: 13px; /* slightly smaller text */
   font-weight: 600;
   text-decoration: none;
   transition: all 0.2s ease;
   cursor: pointer;
   border: none;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
 }
 
 .promowaves-banner-button:hover {
   background: #f8f8f8;
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
-
-.promowaves-banner-button:active {
-  transform: translateY(0);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
 }
 
 .promowaves-banner-close {
   background: rgba(255, 255, 255, 0.15);
   border: none;
   color: white;
-  width: 32px;
-  height: 32px;
+  width: 28px; /* was 32px */
+  height: 28px; /* was 32px */
   border-radius: 6px;
   display: flex;
   align-items: center;
@@ -122,60 +123,27 @@
   background: rgba(255, 255, 255, 0.25);
 }
 
-.promowaves-banner-close:active {
-  background: rgba(255, 255, 255, 0.2);
-}
-
-/* Responsive design for smaller screens */
 @media (max-width: 768px) {
   .promowaves-banner-content {
-    padding: 10px 15px;
-    gap: 10px;
+    padding: 6px 12px;
+    gap: 8px;
   }
 
   .promowaves-banner-logo {
-    width: 36px;
-    height: 36px;
-  }
-
-  .promowaves-banner-logo svg {
-    width: 20px;
-    height: 20px;
+    width: 30px;
+    height: 30px;
   }
 
   .promowaves-banner-title {
-    font-size: 14px;
-  }
-
-  .promowaves-banner-subtitle {
-    font-size: 12px;
-  }
-
-  .promowaves-banner-button {
-    padding: 8px 16px;
     font-size: 13px;
   }
 
-  .promowaves-banner-button span {
-    display: none;
-  }
-
-  .promowaves-banner-button::after {
-    content: "Go";
-  }
-}
-
-@media (max-width: 480px) {
-  .promowaves-banner-left {
-    gap: 10px;
-  }
-
   .promowaves-banner-subtitle {
-    display: none;
+    font-size: 11px;
   }
 
   .promowaves-banner-button {
-    padding: 8px 12px;
+    padding: 6px 12px;
     font-size: 12px;
   }
 }
