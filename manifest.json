@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Promowaves Detector",
-  "version": "2.0.0",
+  "version": "1.0.0",
   "description": "Detects Promowaves-affiliated stores in Google search results and on store websites with a floating banner.",
   "author": "CodeNext Solutions",
   "homepage_url": "https://promowaves.net",
@@ -13,8 +13,7 @@
     "https://*.google.co.uk/*",
     "https://*.google.ca/*",
     "https://*.google.com.pk/*",
-    "https://*.google.in/*",
-    "<all_urls>"
+    "https://*.google.in/*"
   ],
   "background": {
     "service_worker": "background.js"
