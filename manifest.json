@@ -1,11 +1,11 @@
 {
-  "manifest_version": 3,
+  "manifest_version": 4,
   "name": "Promowaves Detector",
   "version": "1.0.0",
   "description": "Detects Promowaves-affiliated stores in Google search results and on store websites with a floating banner.",
   "author": "CodeNext Solutions",
   "homepage_url": "https://promowaves.net",
-  "permissions": ["activeTab", "tabs", "storage", "scripting", "webNavigation"],
+  "permissions": ["activeTab", "tabs", "storage"],
   "host_permissions": [
     "https://promowaves.net/*",
     "http://localhost:3000/*",
